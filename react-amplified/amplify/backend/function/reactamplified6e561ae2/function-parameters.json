@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "api": {
+      "reactamplified": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

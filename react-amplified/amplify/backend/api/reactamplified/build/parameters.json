@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "reactamplified",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authreactamplifiede9b77961",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-reactamplified-dev-233413-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/662e2ea483d0c7b29f1067c6d2f74f1c325af030"
+}
