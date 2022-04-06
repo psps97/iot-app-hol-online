@@ -3,20 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^0.2.24",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "aws-amplify": "^3.3.4",
-    "highcharts": "^8.2.0",
-    "highcharts-react-official": "^3.0.0",
-    "qs": "^6.9.4",
-    "react": "^17.0.0",
-    "react-d3-speedometer": "^0.14.1",
-    "react-dom": "^17.0.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.4",
-    "semantic-ui-react": "^2.0.0"
+    "@aws-amplify/ui-react": "2.13.0",
+    "@testing-library/jest-dom": "5.16.3",
+    "@testing-library/react": "12.1.4",
+    "@testing-library/user-event": "13.5.0",
+    "aws-amplify": "4.3.19",
+    "highcharts": "10.0.0",
+    "highcharts-react-official": "3.1.0",
+    "qs": "6.10.3",
+    "react": "17.0.0",
+    "react-d3-speedometer": "1.0.2",
+    "react-dom": "17.0.0",
+    "react-router-dom": "6.3.0",
+    "react-scripts": "5.0.0",
+    "semantic-ui-react": "2.1.2",
+    "web-vitals": "2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,7 +26,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
