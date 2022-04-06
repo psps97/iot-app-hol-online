@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
 import * as queries from "./graphql/queries";
 
@@ -8,16 +7,17 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import qs from "qs";
 
-
-const DetailPage = ({ location, history }) => {
+const DetailPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location =", location);
 
   const query = qs.parse(location.search, {
-    ignoreQueryPrefix: true
+    ignoreQueryPrefix: true,
   });
 
   const type = query.sensorType;
   console.log(type);
-
   const [contents, setContents] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const DetailPage = ({ location, history }) => {
           graphqlOperation(queries.listSensors, {
             sensorType: type,
             limit: 60,
-            sortDirection: "DESC"
+            sortDirection: "DESC",
           })
         );
 
@@ -38,61 +38,57 @@ const DetailPage = ({ location, history }) => {
         console.log("error: ", err);
       }
     };
-
     const intervalID = setInterval(() => {
       listSensors();
     }, 2000);
 
     return () => {
-      console.log('clean up in detail');
+      console.log("clean up in detail");
       clearInterval(intervalID);
     };
-  }, [type]);
+  }, []);
 
   const data = [];
   const timestamp = [];
 
   contents.map(
     (r, idx) => (
-      data[idx] = r.value, timestamp[idx] = new Date(r.timestamp)
+      (data[idx] = r.value), (timestamp[idx] = new Date(r.timestamp))
     )
   );
   data.reverse();
-  timestamp.reverse()
+  timestamp.reverse();
 
   //console.log("data === " + data.reverse());
- // console.log("data === " + timestamp.reverse());
+  // console.log("data === " + timestamp.reverse());
 
   const options = {
     chart: {
-      type: "spline"
+      type: "spline",
     },
     title: {
-      text: type
+      text: type,
     },
     xAxis: {
-      categories: timestamp
+      categories: timestamp,
     },
     series: [
       {
-        data: data
-      }
-    ]
+        data: data,
+      },
+    ],
   };
 
-
- const handleGoBack =()=>{
-    history.goBack();
-  }
+  const handleGoBack = () => {
+    navigate("/");
+  };
 
   return (
     <div>
-    <button onClick={handleGoBack}>go back</button>
+      <button onClick={handleGoBack}>go back</button>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
 };
 
 export default DetailPage;
-
-
