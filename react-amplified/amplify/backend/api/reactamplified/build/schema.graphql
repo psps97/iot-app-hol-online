@@ -1,19 +1,16 @@
-type Todo {
+
+type Sensor @aws_iam @aws_cognito_user_pools {
   id: ID!
-  name: String!
-  description: String
+  sensorType: String!
+  value: Float!
+  isWarning: Boolean!
+  timestamp: AWSTimestamp!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
 
-enum ModelSortDirection {
-  ASC
-  DESC
-}
-
-type ModelTodoConnection {
-  items: [Todo]
-  nextToken: String
+type Subscription {
+  onCreateSensor(sensorType: String!): Sensor @aws_subscribe(mutations: ["createSensor"])
 }
 
 input ModelStringInput {
@@ -27,22 +24,6 @@ input ModelStringInput {
   notContains: String
   between: [String]
   beginsWith: String
-  attributeExists: Boolean
-  attributeType: ModelAttributeTypes
-  size: ModelSizeInput
-}
-
-input ModelIDInput {
-  ne: ID
-  eq: ID
-  le: ID
-  lt: ID
-  ge: ID
-  gt: ID
-  contains: ID
-  notContains: ID
-  between: [ID]
-  beginsWith: ID
   attributeExists: Boolean
   attributeType: ModelAttributeTypes
   size: ModelSizeInput
@@ -79,23 +60,20 @@ input ModelBooleanInput {
   attributeType: ModelAttributeTypes
 }
 
-input ModelSizeInput {
-  ne: Int
-  eq: Int
-  le: Int
-  lt: Int
-  ge: Int
-  gt: Int
-  between: [Int]
-}
-
-input ModelTodoFilterInput {
-  id: ModelIDInput
-  name: ModelStringInput
-  description: ModelStringInput
-  and: [ModelTodoFilterInput]
-  or: [ModelTodoFilterInput]
-  not: ModelTodoFilterInput
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
 }
 
 enum ModelAttributeTypes {
@@ -111,43 +89,83 @@ enum ModelAttributeTypes {
   _null
 }
 
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelSensorConnection @aws_iam @aws_cognito_user_pools {
+  items: [Sensor]!
+  nextToken: String
+}
+
+input ModelSensorFilterInput {
+  id: ModelIDInput
+  sensorType: ModelStringInput
+  value: ModelFloatInput
+  isWarning: ModelBooleanInput
+  timestamp: ModelIntInput
+  and: [ModelSensorFilterInput]
+  or: [ModelSensorFilterInput]
+  not: ModelSensorFilterInput
+}
+
 type Query {
-  getTodo(id: ID!): Todo
-  listTodos(filter: ModelTodoFilterInput, limit: Int, nextToken: String): ModelTodoConnection
+  getSensor(sensorType: String!, timestamp: AWSTimestamp!): Sensor @aws_iam @aws_cognito_user_pools
+  listSensors(sensorType: String, timestamp: ModelIntKeyConditionInput, filter: ModelSensorFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelSensorConnection @aws_iam @aws_cognito_user_pools
 }
 
-input CreateTodoInput {
+input ModelSensorConditionInput {
+  value: ModelFloatInput
+  isWarning: ModelBooleanInput
+  and: [ModelSensorConditionInput]
+  or: [ModelSensorConditionInput]
+  not: ModelSensorConditionInput
+}
+
+input CreateSensorInput {
   id: ID
-  name: String!
-  description: String
+  sensorType: String!
+  value: Float!
+  isWarning: Boolean!
+  timestamp: AWSTimestamp!
 }
 
-input UpdateTodoInput {
-  id: ID!
-  name: String
-  description: String
-}
-
-input DeleteTodoInput {
+input UpdateSensorInput {
   id: ID
+  sensorType: String!
+  value: Float
+  isWarning: Boolean
+  timestamp: AWSTimestamp!
+}
+
+input DeleteSensorInput {
+  sensorType: String!
+  timestamp: AWSTimestamp!
 }
 
 type Mutation {
-  createTodo(input: CreateTodoInput!, condition: ModelTodoConditionInput): Todo
-  updateTodo(input: UpdateTodoInput!, condition: ModelTodoConditionInput): Todo
-  deleteTodo(input: DeleteTodoInput!, condition: ModelTodoConditionInput): Todo
+  createSensor(input: CreateSensorInput!, condition: ModelSensorConditionInput): Sensor @aws_iam @aws_cognito_user_pools
+  updateSensor(input: UpdateSensorInput!, condition: ModelSensorConditionInput): Sensor @aws_iam @aws_cognito_user_pools
+  deleteSensor(input: DeleteSensorInput!, condition: ModelSensorConditionInput): Sensor @aws_iam @aws_cognito_user_pools
 }
 
-input ModelTodoConditionInput {
-  name: ModelStringInput
-  description: ModelStringInput
-  and: [ModelTodoConditionInput]
-  or: [ModelTodoConditionInput]
-  not: ModelTodoConditionInput
+input ModelIntKeyConditionInput {
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
 }
 
-type Subscription {
-  onCreateTodo: Todo @aws_subscribe(mutations: ["createTodo"])
-  onUpdateTodo: Todo @aws_subscribe(mutations: ["updateTodo"])
-  onDeleteTodo: Todo @aws_subscribe(mutations: ["deleteTodo"])
-}

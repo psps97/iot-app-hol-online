@@ -1,18 +1,18 @@
-type Sensor @model(subscriptions: null)
-@key(fields: ["sensorType", "timestamp"])
-@auth(
+type Sensor
+  @model(subscriptions: null)
+  @auth(
     rules: [
-      {allow: private, provider: iam}
-      {allow: private, provider: userPools}
+      { allow: private, provider: iam }
+      { allow: private, provider: userPools }
     ]
-) 
-{
+  ) {
   id: ID!
-  sensorType: String!
+  sensorType: String! @primaryKey(sortKeyFields: ["timestamp"])
   value: Float!
   isWarning: Boolean!
   timestamp: AWSTimestamp!
 }
 type Subscription {
-  onCreateSensor(sensorType: String!): Sensor @aws_subscribe(mutations: ["createSensor"])
+  onCreateSensor(sensorType: String!): Sensor
+    @aws_subscribe(mutations: ["createSensor"])
 }

@@ -1,10 +1,28 @@
 {
   "auth": {
-    "reactamplifiede9b77961": {
+    "reactamplified092bb062": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
-      "customAuth": false
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      }
     }
   },
   "api": {
@@ -16,7 +34,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authreactamplifiede9b77961"
+              "userPoolId": "authreactamplified092bb062"
             }
           },
           "additionalAuthenticationProviders": [
@@ -29,7 +47,7 @@
     }
   },
   "function": {
-    "reactamplified6e561ae2": {
+    "reactamplifiedaa038e73": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "reactamplified",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/chjung/iothol/react-amplified/amplify/backend/api/reactamplified/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authreactamplified092bb062"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AWS_IAM"
+      }
+    ]
+  }
+}
