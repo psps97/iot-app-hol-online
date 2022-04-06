@@ -5,6 +5,7 @@ import { Container, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 
 import * as subscriptions from "./graphql/subscriptions";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
@@ -18,22 +19,22 @@ function App() {
   useEffect(() => {
     const RMSsubscription = API.graphql(
       graphqlOperation(subscriptions.onCreateSensor, {
-        sensorType: "wRMSCurrent"
+        sensorType: "wRMSCurrent",
       })
     ).subscribe({
-      next: eventData => {
+      next: (eventData) => {
         setWRMSCurrent(eventData.value.data.onCreateSensor.value);
-      }
+      },
     });
 
     const Loadsubscription = API.graphql(
       graphqlOperation(subscriptions.onCreateSensor, {
-        sensorType: "wCurrentLoad"
+        sensorType: "wCurrentLoad",
       })
     ).subscribe({
-      next: eventData => {
+      next: (eventData) => {
         setWCurrentLoad(eventData.value.data.onCreateSensor.value);
-      }
+      },
     });
 
     return () => {
@@ -89,7 +90,5 @@ export default withAuthenticator(App);
 
 const styles = {
   marginLeft: "1em",
-  marginRight: "1em"
+  marginRight: "1em",
 };
-
-
