@@ -1,14 +1,9 @@
-         ___        ______     ____ _                 _  ___  
-        / \ \      / / ___|   / ___| | ___  _   _  __| |/ _ \ 
-       / _ \ \ /\ / /\___ \  | |   | |/ _ \| | | |/ _` | (_) |
-      / ___ \ V  V /  ___) | | |___| | (_) | |_| | (_| |\__, |
-     /_/   \_\_/\_/  |____/   \____|_|\___/ \__,_|\__,_|  /_/ 
- ----------------------------------------------------------------- 
+# Building IoT Application with AWS Amplify and AWS AppSync
 
+In this lab, we will build IoT Application with various AWS services:
+* React App for user interface
+* AWS AppSync for GraphQL interface to combine data from Amazon DynamoDB
+* AWS Lambda for deliver data from AWS IoT Core to AWS AppSync
+* Amazon Cognito for authentication
+* AWS Amplify cli for deploying auth, api and function 
 
-Hi there! Welcome to AWS Cloud9!
-
-To get started, create some files, play with the terminal,
-or visit https://docs.aws.amazon.com/console/cloud9/ for our documentation.
-
-Happy coding!

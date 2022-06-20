@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { useLocation, useNavigate } from "react-router-dom";
+import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "./graphql/queries";
 
 import Highcharts from "highcharts";
@@ -38,6 +38,7 @@ const DetailPage = () => {
         console.log("error: ", err);
       }
     };
+    
     const intervalID = setInterval(() => {
       listSensors();
     }, 2000);
@@ -46,13 +47,14 @@ const DetailPage = () => {
       console.log("clean up in detail");
       clearInterval(intervalID);
     };
-  }, []);
+  }, [type]);
 
   const data = [];
   const timestamp = [];
-
+  
   contents.map(
     (r, idx) => (
+      // eslint-disable-next-line
       (data[idx] = r.value), (timestamp[idx] = new Date(r.timestamp))
     )
   );
