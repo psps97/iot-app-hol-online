@@ -116,7 +116,7 @@ time.sleep(2)
 
 # Publish to the same topic in a loop forever
 loopCount = 0
-config_data = ds.load_config("Iot-app-hol-online/sensor-data-simulator/config.json")
+config_data = ds.load_config("iot-app-hol-online/sensor-data-simulator/config.json")
 
 while True:
     if args.mode == 'both' or args.mode == 'publish':
